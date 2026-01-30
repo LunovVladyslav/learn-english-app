@@ -2,12 +2,21 @@ spring:
   ai:
     openai:
       api-key: ${OPEN_AI_KEY}
-      base-url: https://openrouter.ai/api
+      base-url: ${OPEN_AI_URL}
       chat:
         options:
-          model: openai/gpt-oss-20b:free
+          model: ${OPEN_AI_MODEL}
           max-tokens: 2048
 
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+
+jwt:
+  private.key: classpath:/keys/private.pem
+  public.key: classpath:/key/public.pem
 
 server:
   address: 0.0.0.0

@@ -1,4 +1,4 @@
-package dev.lunov.eng;
+package dev.lunov.eng.ai;
 
 
 public record WordDTO(
