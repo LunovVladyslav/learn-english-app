@@ -15,8 +15,8 @@ logging:
     org.springframework.security: INFO
 
 jwt:
-  private.key: classpath:/keys/private.pem
-  public.key: classpath:/key/public.pem
+  private-key: classpath:/keys/private.pem
+  public-key: classpath:/keys/public.pem
 
 server:
   address: 0.0.0.0
