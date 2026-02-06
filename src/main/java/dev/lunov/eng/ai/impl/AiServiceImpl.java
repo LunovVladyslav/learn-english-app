@@ -1,20 +1,22 @@
-package dev.lunov.eng;
+package dev.lunov.eng.ai.impl;
 
+import dev.lunov.eng.ai.AiService;
+import dev.lunov.eng.ai.dto.WordDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Service
-public class AiService {
+public class AiServiceImpl implements AiService {
 
     private final ChatClient openRouter;
     private final BeanOutputConverter<List<WordDTO>> converter;
@@ -25,7 +27,7 @@ public class AiService {
             You are a professional English language expert.
             """;
     private static final String USER_PROMPT = """
-             Generate exactly 5 alternative ways to express "%s".
+             Generate exactly %d alternative ways to express "%s".
             
             STRICT REQUIREMENTS:
             - Output ONLY valid JSON array
@@ -39,7 +41,7 @@ public class AiService {
             """;
 
 
-    public AiService(
+    public AiServiceImpl(
             @Qualifier("openAiChatClient") ChatClient openAiChatClient
     ) {
         this.openRouter = openAiChatClient;
@@ -49,7 +51,7 @@ public class AiService {
         this.cache = new HashMap<>();
     }
 
-    public List<WordDTO> getFiveWaysOpenAi(String word) {
+    public List<WordDTO> getAlternativeWaysOpenAi(String name, String word, int num) {
         var rawResponse = "";
         try {
             if (!cache.containsKey(word)) {
@@ -58,6 +60,7 @@ public class AiService {
                         .prompt()
                         .system(SYSTEM_PROMPT)
                         .user(USER_PROMPT.formatted(word))
+                        .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, name))
                         .call()
                         .entity(converter);
                 cache.put(word, response);
