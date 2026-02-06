@@ -1,12 +1,31 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://${DB_URL:localhost}:5432/${DB_NAME:my_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  #  data:
+  #    redis:
+  #      host: ${REDIS_HOST:localhost}
+  #      port: ${REDIS_PORT:6379}
+  #      password: ${REDIS_PASSWORD:}
+  flyway:
+    url: jdbc:postgresql://${DB_URL:localhost}:5432/${DB_NAME:my_db}
+    user: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    locations: "classpath:db/migration"
   ai:
     openai:
-      api-key: ${OPEN_AI_KEY}
-      base-url: ${OPEN_AI_URL}
+      api-key: ${OPEN_AI_KEY:NONE}
+      base-url: ${OPEN_AI_URL:NONE}
       chat:
         options:
-          model: ${OPEN_AI_MODEL}
+          model: ${OPEN_AI_MODEL:NONE}
           max-tokens: 2048
+
+
 
 logging:
   level:
