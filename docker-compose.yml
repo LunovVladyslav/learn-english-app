@@ -38,7 +38,28 @@ services:
     networks:
       - my_network
 
-# Web UI for postgres
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-admin}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-my_mongo_db}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my_network
+
+
+  # Web UI for postgres
   pg_admin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
@@ -69,6 +90,24 @@ services:
       - redis
     networks:
       - my_network
+      -
+  # Web UI for mongodb
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER:-admin}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD:-admin}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-admin}@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGOEXPRESS_LOGIN:-admin}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOEXPRESS_PASSWORD:-pass}
+    ports:
+      - "8082:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - my_network
 
 volumes:
   db_data:
@@ -76,6 +115,8 @@ volumes:
   redis_data:
     driver: local
   pgadmin_data:
+    driver: local
+  mongo_data:
     driver: local
 
 networks:

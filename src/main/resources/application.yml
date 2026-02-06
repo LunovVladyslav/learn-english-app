@@ -6,11 +6,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-  #  data:
-  #    redis:
-  #      host: ${REDIS_HOST:localhost}
-  #      port: ${REDIS_PORT:6379}
-  #      password: ${REDIS_PASSWORD:}
+    data:
+      redis:
+        host: ${REDIS_HOST:localhost}
+        port: ${REDIS_PORT:6379}
+        password: ${REDIS_PASSWORD:}
   flyway:
     url: jdbc:postgresql://${DB_URL:localhost}:5432/${DB_NAME:my_db}
     user: ${DB_USER:postgres}
