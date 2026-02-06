@@ -1,6 +1,9 @@
 package dev.lunov.eng.ai;
 
+import dev.lunov.eng.ai.dto.WordDTO;
+import dev.lunov.eng.ai.impl.AiServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,15 +13,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AiController {
 
-    private final AiService aiService;
+    private final AiServiceImpl aiService;
 
-//    @GetMapping("/ten-ways/ollama")
-//    public List<WordDTO> getWaysOllama(@RequestParam(name = "word") String word) {
-//        return aiService.getTenWaysToUseWord(word);
-//    }
-
-    @GetMapping("/ten-ways/openrouter")
-    public List<WordDTO> getWaysOpenRouter(@RequestParam(name = "word") String word) {
-        return aiService.getFiveWaysOpenAi(word);
+    @GetMapping("/ways/openrouter")
+    public List<WordDTO> getWaysOpenRouter(
+            Authentication auth,
+            @RequestParam(name = "word") String word,
+            @RequestParam(name = "num")  int num
+    ) {
+        return aiService.getAlternativeWaysOpenAi(auth.getName(), word, num);
     }
 }
