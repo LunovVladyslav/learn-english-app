@@ -1,8 +1,18 @@
 spring:
+  mongodb:
+    host: localhost
+    database: ${MONGO_DB:my_mongo_db}
+    username: ${MONGO_USER:admin}
+    password: ${MONGO_PASSWORD:admin}
+
   datasource:
     url: jdbc:postgresql://${DB_URL:localhost}:5432/${DB_NAME:my_db}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:postgres}
+  data:
+    mongodb:
+      auto-index-creation: true
+
   jpa:
     hibernate:
       ddl-auto: none
