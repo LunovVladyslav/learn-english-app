@@ -4,6 +4,11 @@ import dev.lunov.eng.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Represents a specific skill within a user's language learning profile, such as listening, speaking, reading, writing, grammar, or vocabulary.
+ * Each skill can have notes and an improving strategy to help the user focus on areas that need improvement.
+ */
+
 @Builder
 @Getter
 @Setter

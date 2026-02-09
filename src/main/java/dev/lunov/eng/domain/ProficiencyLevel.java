@@ -2,6 +2,10 @@ package dev.lunov.eng.domain;
 
 import lombok.Getter;
 
+/**
+ * Represents the proficiency levels in language learning, each with associated points and bonuses.
+ */
+
 @Getter
 public enum ProficiencyLevel {
     A1(100.0, 1.0, 5.0,0.7),

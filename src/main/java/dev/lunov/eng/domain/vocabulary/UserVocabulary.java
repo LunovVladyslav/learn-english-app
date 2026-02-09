@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Represents a user's vocabulary collection, containing a list of vocabulary items and associated metadata.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

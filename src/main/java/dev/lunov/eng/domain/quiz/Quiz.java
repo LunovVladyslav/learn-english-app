@@ -17,6 +17,10 @@ import java.util.UUID;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
+/**
+ * Represents a quiz session for a user, including the task, answers, difficulty, and scoring logic.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

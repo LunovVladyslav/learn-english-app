@@ -11,6 +11,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Represents a user's language learning profile, tracking experience, proficiency level, and skills.
+ */
+
 @Builder
 @Getter
 @Setter

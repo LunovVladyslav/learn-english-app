@@ -7,6 +7,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a vocabulary item in the user's learning journey, including the word, its translation, definition,
+ * part of speech, proficiency level, example sentence, mastery status, synonyms, tags, and review statistics.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor
