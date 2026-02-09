@@ -18,7 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "profiles"
+        name = "profiles",
+        indexes = {
+                @Index(name = "idx_profile_user_id", columnList = "user_id")
+        }
 )
 public class Profile {
 
@@ -76,14 +79,12 @@ public class Profile {
     private ProficiencyLevel calculateProficiencyLevel(double experience) {
         ProficiencyLevel[] levels = ProficiencyLevel.values();
 
-        // Start from the highest level and work down
         for (int i = levels.length - 1; i >= 0; i--) {
             if (experience >= levels[i].getLevelPoints()) {
                 return levels[i];
             }
         }
 
-        // Default to A1 if experience is below all thresholds
         return ProficiencyLevel.A1;
     }
 
@@ -95,7 +96,6 @@ public class Profile {
     public double getExperienceToNextLevel() {
         ProficiencyLevel[] levels = ProficiencyLevel.values();
 
-        // Find current level index
         int currentIndex = -1;
         for (int i = 0; i < levels.length; i++) {
             if (levels[i] == this.proficiency) {
@@ -104,11 +104,10 @@ public class Profile {
             }
         }
 
-        // If at max level, return 0
         if (currentIndex == levels.length - 1) {
             return 0.0;
         }
-        // Calculate points needed for next level
+
         ProficiencyLevel nextLevel = levels[currentIndex + 1];
         return nextLevel.getLevelPoints() - this.experience;
     }
